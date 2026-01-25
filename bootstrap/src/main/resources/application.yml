@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: transaction-aggregator
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/bank_transactions
+      auto-index-creation: true
+    redis:
+      host: localhost
+      port: 6379
+
+  cache:
+    type: redis
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+server:
+  port: 8080
+  shutdown: graceful
+
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+rate-limit:
+  requests-per-minute: 100
+
+import:
+  max-file-size-mb: 10
+  max-rows: 100000
+  processing-timeout-minutes: 5
+
+cache:
+  statistics-ttl-minutes: 15
+
+logging:
+  level:
+    com.banking: INFO
+    org.springframework.data.mongodb: WARN
